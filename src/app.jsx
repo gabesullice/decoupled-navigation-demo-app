@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import {default as Home} from './components/screen/home';
+import Main from './components/main';
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('app-root');
-  render(<Home />, root);
+  render(<Main />, root);
 });
