@@ -1,19 +1,27 @@
 import React, { useContext } from 'react';
 
-import { DrupalContext } from '../../contexts/page';
+import useMenu from '../../hooks/use-menu';
+
+const LinkItem = ({link}) => {
+  return (<li>
+    <a href="#" onClick={link.follow} title={link.description}>{link.title}</a>
+    <LinkItems links={link.children || []} />
+  </li>);
+};
+
+const LinkItems = ({links}) => {
+  const items = links.map((link, key) => <LinkItem {...{key, link}} />);
+  return items.length ? <ul>{items}</ul> : null;
+};
 
 export default () => {
-  const { loading, json } = useContext(DrupalContext);
+  const { tree, loading } = useMenu('main');
 
-  if (loading || !json) {
+  if (loading || !tree) {
     return null;
   }
 
-  return (<nav>
-    <ul>
-      <li>{json.data.type}</li>
-      <li>This is a nav item.</li>
-      <li>This is another nav item.</li>
-    </ul>
-  </nav>);
+  return <nav>
+    <LinkItems links={tree} />
+  </nav>;
 };

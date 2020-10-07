@@ -14,6 +14,7 @@ const DrupalProvider = ({initialURL, children}) => {
 
   useEffect(() => {
     const fetchOptions = {
+      redirect: 'manual',
       headers: {
         accept: 'application/vnd.api+json',
       },
@@ -63,7 +64,19 @@ const DrupalProvider = ({initialURL, children}) => {
     })
   }, [location]);
 
-  return (<DrupalContext.Provider value={{ ...defaultValue, ...state }}>
+  const value = {
+    ...defaultValue,
+    ...state,
+    follow: (link) => {
+      if (link.meta.type === 'text/html') {
+        window.location.href = link.href;
+      } else {
+        setLocation(link.href)
+      }
+    },
+  };
+
+  return (<DrupalContext.Provider {...{value}}>
     {children}
   </DrupalContext.Provider>);
 };
