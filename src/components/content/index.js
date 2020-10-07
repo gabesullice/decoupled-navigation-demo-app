@@ -1,25 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
-import { DrupalContext } from '../../contexts/drupal';
+import { DrupalContext } from "../../contexts/drupal";
 
-const DocumentViewer = ({doc}) => {
-  return <dl>
-    <dt>Type</dt>
-    <dd>{doc.data.type}</dd>
-    <dt>ID</dt>
-    <dd>{doc.data.id}</dd>
-  </dl>;
+const DocumentViewer = ({ doc }) => {
+  return (
+    <dl>
+      <dt>Type</dt>
+      <dd>{doc.data.type}</dd>
+      <dt>ID</dt>
+      <dd>{doc.data.id}</dd>
+    </dl>
+  );
 };
 
-const blueStyle = {backgroundColor: 'lightblue'};
-const redStyle = {backgroundColor: 'pink'};
+const blueStyle = { backgroundColor: "lightblue" };
+const redStyle = { backgroundColor: "pink" };
 
-const BlueDiv = ({children}) => {
-  return (<div style={blueStyle}>{children}</div>);
+const BlueDiv = ({ children }) => {
+  return <div style={blueStyle}>{children}</div>;
 };
 
-const RedDiv = ({children}) => {
-  return (<div style={redStyle}>{children}</div>);
+const RedDiv = ({ children }) => {
+  return <div style={redStyle}>{children}</div>;
 };
 
 export default () => {
@@ -32,14 +34,13 @@ export default () => {
   const doc = <DocumentViewer doc={json} />;
 
   switch (json.data.type) {
-    case 'node--article':
+    case "node--article":
       return <BlueDiv>{doc}</BlueDiv>;
 
-    case 'node--page':
+    case "node--page":
       return <RedDiv>{doc}</RedDiv>;
 
     default:
       return <div>{doc}</div>;
-  };
-
+  }
 };

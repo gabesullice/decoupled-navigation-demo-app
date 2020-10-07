@@ -1,4 +1,6 @@
-default:
+default: pretty pack
+
+pack:
 	npx webpack
 
 pretty:

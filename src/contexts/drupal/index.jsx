@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const defaultValue = {
   response: null,
@@ -8,15 +8,15 @@ const defaultValue = {
 
 const DrupalContext = React.createContext(defaultValue);
 
-const DrupalProvider = ({initialURL, children}) => {
-  const [ location, setLocation ] = useState(initialURL);
-  const [ state, setState ] = useState(defaultValue);
+const DrupalProvider = ({ initialURL, children }) => {
+  const [location, setLocation] = useState(initialURL);
+  const [state, setState] = useState(defaultValue);
 
   useEffect(() => {
     const fetchOptions = {
-      redirect: 'manual',
+      redirect: "manual",
       headers: {
-        accept: 'application/vnd.api+json',
+        accept: "application/vnd.api+json",
       },
     };
 
@@ -24,17 +24,16 @@ const DrupalProvider = ({initialURL, children}) => {
 
     fetch(location, fetchOptions).then(async (response) => {
       const { ok, status, statusText } = response;
-      const contentType = response.headers.get('content-type') || 'unknown';
+      const contentType = response.headers.get("content-type") || "unknown";
 
-      if (contentType.startsWith('text/html')) {
+      if (contentType.startsWith("text/html")) {
         window.location.href = response.url;
-      }
-      else if (!contentType.startsWith('application/vnd.api+json')) {
+      } else if (!contentType.startsWith("application/vnd.api+json")) {
         setState({ ...state, response, json: null, loading: false });
         throw new Error(`Unacceptable content type: ${contentType}`);
       }
 
-      const json = response.headers.get('content-length')
+      const json = response.headers.get("content-length")
         ? await response.json()
         : null;
 
@@ -45,40 +44,44 @@ const DrupalProvider = ({initialURL, children}) => {
 
         case response.ok:
           setState({ ...state, response, json, loading: false });
-          throw new Error(`Unrecognized response type: ${status} ${statusText}`);
+          throw new Error(
+            `Unrecognized response type: ${status} ${statusText}`
+          );
 
         case 301:
         case 302:
         case 307:
-          window.location.href = response.headers.get('location');
+          window.location.href = response.headers.get("location");
           break;
 
-        case (status >= 300 && status < 400):
+        case status >= 300 && status < 400:
           setState({ ...state, response, json, loading: false });
-          throw new Error('Unable to handle redirect.');
+          throw new Error("Unable to handle redirect.");
 
         default:
           setState({ ...state, response, json, loading: false });
-          throw new Error(`Unrecognized response type: ${status} ${statusText}`);
+          throw new Error(
+            `Unrecognized response type: ${status} ${statusText}`
+          );
       }
-    })
+    });
   }, [location]);
 
   const value = {
     ...defaultValue,
     ...state,
     follow: (link) => {
-      if (link.meta.type === 'text/html') {
+      if (link.meta.type === "text/html") {
         window.location.href = link.href;
       } else {
-        setLocation(link.href)
+        setLocation(link.href);
       }
     },
   };
 
-  return (<DrupalContext.Provider {...{value}}>
-    {children}
-  </DrupalContext.Provider>);
+  return (
+    <DrupalContext.Provider {...{ value }}>{children}</DrupalContext.Provider>
+  );
 };
 
 export { DrupalContext, DrupalProvider };
