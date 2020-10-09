@@ -6,10 +6,14 @@ const defaultValue = {
   loading: true,
 };
 
+const defaultServerConfig = {
+  url: `${window.location.protocol}//${window.location.host}`,
+};
+
 const DrupalContext = React.createContext(defaultValue);
 
-const DrupalProvider = ({ config, children }) => {
-  const { server } = config;
+const DrupalProvider = ({ config = {}, children }) => {
+  const { server } = { server: defaultServerConfig, ...config };
   const initialURL = new URL(server.url);
   initialURL.searchParams.set("_format", "api_json");
   const [location, setLocation] = useState(initialURL.toString());
