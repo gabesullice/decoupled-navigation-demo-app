@@ -6,6 +6,8 @@ to a decoupled front end. It requires a Drupal site to be installed with a
 small number of patches and custom modules. Instructions for setting up the
 back end are below.
 
+[Skip to front end setup](#front-end-setup).
+
 ## Back end setup
 
 ### 1. Download Drupal and the required modules/patches
