@@ -4,7 +4,11 @@ JS menu component proof-of-concept
 This React application demonstrates one approach to providing decoupled menus
 to a decoupled front end. It requires a Drupal site to be installed with a
 small number of patches and custom modules. Instructions for setting up the
-back end are below.
+front and back ends are below.
+
+The back end requires a couple sandbox modules (which require a couple core
+patches). The back end also needs to have some default configuration and
+content set up.
 
 [Skip to front end setup](#front-end-setup).
 
