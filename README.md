@@ -41,7 +41,43 @@ composer require --prefer-source drupal/jsonapi_navigation:1.0.x-dev
 composer install
 ```
 
-### 2. Install Drupal
+### 2. Enable CORS
+
+Unless you will be serving the front-end application and the back-end
+application with the same hostname, you will need to set up the back end to
+allo "cross-origin resource sharing" (CORS). To do so, create a `services.yml`
+file:
+
+```sh
+cp sites/default/default.services.yml sites/default/services.yml
+```
+
+Then, make the following changes to `services.yml`:
+
+```diff
+--- a/services.yml
++++ b/services.yml
+@@ -159,7 +159,7 @@
+    # for more information about the topic in general.
+    # Note: By default the configuration is disabled.
+   cors.config:
+-    enabled: false
++    enabled: true
+     # Specify allowed headers, like 'x-allowed-header'.
+     allowedHeaders: []
+     # Specify allowed request methods, specify ['*'] to allow all possible ones.
+@@ -167,7 +167,7 @@
+     # Configure requests allowed from specific origins.
+     allowedOrigins: ['*']
+     # Sets the Access-Control-Expose-Headers header.
+-    exposedHeaders: false
++    exposedHeaders: true
+     # Sets the Access-Control-Max-Age header.
+     maxAge: false
+     # Sets the Access-Control-Allow-Credentials header.
+```
+
+### 3. Install Drupal
 
 Change directories into the web root (`cd web`) and run the following command.
 
@@ -58,7 +94,7 @@ having to rebuild the project and apply extra configuration, use the hostname:
 api.jsonapi-navigation.test
 ```
 
-### 3. Log in and create test content
+### 4. Log in and create test content
 
 Using the previously noted credentials, visit `/user/login` and log in as User
 1.
