@@ -87,11 +87,26 @@ cd decoupled-navigation-demo-app
 ```
 
 If you used the hostname `api.decoupled-navigation.test` for the back end, then
-you do not have to rebuild the project. If you did _not_ use that hostname, you
-will have to configure the application to use a different hostname and rebuild
-the project. To do so, open and edit the `.env.js` file to use the correct
-server URL. It should include the URI scheme, hostname, and port (if it's
-not `80` or `443`). It should _not_ have a trailing slash (`/`).
+you're done!
+
+If you would like to make changes you will need to be build the project. To do
+so, install the project's dependencies:
+
+```sh
+npm install
+```
+
+Next, create a `.env.js` file:
+
+```sh
+make .env.js
+```
+
+You must configure the project so that it can reach your back end. To do so,
+open and edit the `.env.js` file. It should look like the example below. This
+should the the root URL for your back end (e.g.
+`https://js-menu-initiative.localhost:8888`).  It should _not_ have a trailing
+slash (`/`).
 
 ```js
 // .env.js
@@ -104,14 +119,10 @@ module.exports = {
 };
 ```
 
-Next, install the project's dependencies:
+Finally, run [prettier] and build the project again by running:
 
 ```sh
-npm install
+make
 ```
 
-Finally, rebuild the `dist` directory:
-
-```sh
-npx webpack
-```
+[prettier][https://prettier.io/]
