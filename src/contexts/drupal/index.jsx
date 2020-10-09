@@ -8,8 +8,11 @@ const defaultValue = {
 
 const DrupalContext = React.createContext(defaultValue);
 
-const DrupalProvider = ({ initialURL, children }) => {
-  const [location, setLocation] = useState(initialURL);
+const DrupalProvider = ({ config, children }) => {
+  const { server } = config;
+  const initialURL = new URL(server.url);
+  initialURL.searchParams.set("_format", "api_json");
+  const [location, setLocation] = useState(initialURL.toString());
   const [state, setState] = useState(defaultValue);
 
   useEffect(() => {
@@ -33,9 +36,16 @@ const DrupalProvider = ({ initialURL, children }) => {
         throw new Error(`Unacceptable content type: ${contentType}`);
       }
 
-      const json = response.headers.get("content-length")
-        ? await response.json()
-        : null;
+      let json = null;
+      if (response.headers.has("content-length")) {
+        if (response.headers.get("content-length")) {
+          json = await response.json();
+        }
+      } else {
+        json = await response.text().then((text) => {
+          return text.length ? JSON.parse(text) : null;
+        });
+      }
 
       switch (status) {
         case 200:
