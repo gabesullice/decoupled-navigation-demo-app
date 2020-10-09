@@ -1,7 +1,17 @@
 JS menu component proof-of-concept
 ===
 
-# Setup
+This React application demonstrates one approach to providing decoupled menus
+to a decoupled front end. It requires a Drupal site to be installed with a
+small number of patches and custom modules. Instructions for setting up the
+back end are below.
+
+# Back end setup
+
+To install the back end, you will need to set up Drupal as a Composer project.
+Then, you will need to install Drupal using the `standard` profile. Finally,
+you will need to create a few test nodes and configure one of them as a front
+page.
 
 ```sh
 # First, change directories to where you'd like to install Drupal.
