@@ -119,10 +119,14 @@ module.exports = {
 };
 ```
 
-Finally, run [prettier] and build the project again by running:
+Finally, build the project again by running:
 
 ```sh
 make
 ```
 
+Running `make` will run both [prettier] and [webpack], but you can run them
+individually with either `make prettier` or `make pack`:
+
 [prettier]: https://prettier.io/
+[webpack]: https://webpack.js.org/
