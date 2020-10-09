@@ -125,4 +125,4 @@ Finally, run [prettier] and build the project again by running:
 make
 ```
 
-[prettier][https://prettier.io/]
+[prettier]: https://prettier.io/
