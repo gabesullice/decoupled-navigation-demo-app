@@ -97,7 +97,7 @@ Finally, you will need to set up an Apache vhost or other server. To avoid
 having to rebuild the project and apply extra configuration, use the hostname:
 
 ```
-api.jsonapi-navigation.test
+api.decoupled-navigation.test
 ```
 
 ### 4. Log in and create test content
@@ -118,6 +118,11 @@ a menu link_ and set the _Parent item_ to `-- Home` and set the _Weight_ to
 
 Visit `/admin/config/system/site-information` and change the default front page
 to `/node/1`.
+
+### 5. Install required modules
+
+Visit `/admin/modules` and enable the _JSON:API Navigation_ module and its
+dependencies.
 
 ## Front end setup
 
