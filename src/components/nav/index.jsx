@@ -3,11 +3,19 @@ import React, { useContext } from "react";
 import useMenu from "../../hooks/use-menu";
 
 const LinkItem = ({ link }) => {
+  const target = new URL(link.href.toString(), window.location);
+  target.searchParams.delete("_format");
+  const anchor = {
+    href: `${target.pathname}${target.search}${target.hash}`,
+    title: link.description,
+    onClick: (e) => {
+      e.preventDefault();
+      link.follow();
+    },
+  };
   return (
     <li>
-      <a href="#" onClick={link.follow} title={link.description}>
-        {link.title}
-      </a>
+      <a {...anchor}>{link.title}</a>
       <LinkItems links={link.children || []} />
     </li>
   );

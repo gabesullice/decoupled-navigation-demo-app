@@ -9,7 +9,7 @@ import { relMenuItem } from "../drupal/link-rels";
 function normalizeLinks(linksObject) {
   return Object.entries(linksObject).map(([key, { href, rel, meta }]) => {
     return {
-      href,
+      href: new URL(href),
       rel: rel || key.split("--")[0],
       meta,
     };
