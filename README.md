@@ -136,8 +136,8 @@ cd decoupled-navigation-demo-app
 If you used the hostname `api.decoupled-navigation.test` for the back end, then
 you're done!
 
-If you would like to make changes you will need to be build the project. To do
-so, install the project's dependencies:
+If you would like to make changes you will need to build the project. To do so,
+install the project's dependencies:
 
 ```sh
 npm install
@@ -173,7 +173,15 @@ make
 ```
 
 Running `make` will run both [prettier] and [webpack], but you can run them
-individually with either `make prettier` or `make pack`:
+individually with either `make prettier` or `make pack`.
+
+### "Pretty" URLs
+
+This directory is meant to be served by a different Apache vhost than the back
+end. For example, the front end can be served from
+`www.decoupled-navigation.test` and the back end can be served from
+`api.decoupled-navigation.test`. If your server is set up this way, pretty URLs
+that are defined by the back end should work out of the box.
 
 [prettier]: https://prettier.io/
 [webpack]: https://webpack.js.org/
