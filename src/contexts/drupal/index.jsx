@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { newURLWithOrigin } from "../../utils/url";
+
 const defaultValue = {
   response: null,
   json: null,
@@ -7,14 +9,15 @@ const defaultValue = {
 };
 
 const defaultServerConfig = {
-  url: `${window.location.protocol}//${window.location.host}`,
+  url: window.location.origin,
 };
 
 const DrupalContext = React.createContext(defaultValue);
 
 const DrupalProvider = ({ config = {}, children }) => {
   const { server } = { server: defaultServerConfig, ...config };
-  const initialURL = new URL(server.url);
+  const serverURL = new URL(server.url);
+  const initialURL = newURLWithOrigin(window.location, serverURL);
   initialURL.searchParams.set("_format", "api_json");
   const [location, setLocation] = useState(initialURL.toString());
   const [state, setState] = useState(defaultValue);
@@ -88,7 +91,18 @@ const DrupalProvider = ({ config = {}, children }) => {
       if (link.meta.type === "text/html") {
         window.location.href = link.href;
       } else {
-        setLocation(link.href);
+        const destination = newURLWithOrigin(link.href, window.location);
+        destination.searchParams.delete("_format");
+        const historyState = {
+          apiURL: link.href.toString(),
+          appURL: destination.toString(),
+        };
+        window.history.pushState(
+          historyState,
+          link.title,
+          destination.toString()
+        );
+        setLocation(link.href.toString());
       }
     },
   };
