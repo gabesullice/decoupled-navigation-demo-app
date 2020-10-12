@@ -6,7 +6,9 @@ import { DrupalProvider } from "../contexts/drupal";
 
 export default ({ config }) => (
   <DrupalProvider config={config.drupal}>
-    <Nav />
-    <Content />
+    <div className="page_wrapper">
+      <Nav />
+      <Content />
+    </div>
   </DrupalProvider>
 );

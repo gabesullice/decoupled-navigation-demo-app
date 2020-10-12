@@ -1,27 +1,15 @@
 import React, { useContext } from "react";
 
 import { DrupalContext } from "../../contexts/drupal";
+import Page from "./page";
+import Article from "./article";
 
 const DocumentViewer = ({ doc }) => {
   return (
-    <dl>
-      <dt>Type</dt>
-      <dd>{doc.data.type}</dd>
-      <dt>ID</dt>
-      <dd>{doc.data.id}</dd>
-    </dl>
+    <pre className="main_content main_content--raw">
+      {JSON.stringify(doc, null, "  ")}
+    </pre>
   );
-};
-
-const blueStyle = { backgroundColor: "lightblue" };
-const redStyle = { backgroundColor: "pink" };
-
-const BlueDiv = ({ children }) => {
-  return <div style={blueStyle}>{children}</div>;
-};
-
-const RedDiv = ({ children }) => {
-  return <div style={redStyle}>{children}</div>;
 };
 
 export default () => {
@@ -31,16 +19,14 @@ export default () => {
     return null;
   }
 
-  const doc = <DocumentViewer doc={json} />;
-
   switch (json.data.type) {
     case "node--article":
-      return <BlueDiv>{doc}</BlueDiv>;
+      return <Article data={json.data} />;
 
     case "node--page":
-      return <RedDiv>{doc}</RedDiv>;
+      return <Page data={json.data} />;
 
     default:
-      return <div>{doc}</div>;
+      return <DocumentViewer doc={json} />;
   }
 };

@@ -1,0 +1,39 @@
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.page_wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main_content {
+  margin: 0 20px;
+}
+
+.main_content__dates {
+  font-style: italic;
+  margin: 1em 0;
+}
+
+.main_content__dates__date {
+  margin: 0;
+}
+
+.main_content--page h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.main_content--article .main_content__body {
+  column-count: 3;
+  column-width: 180px;
+}
+
+.main_content__body p:first-child {
+  margin-top: 0;
+}
