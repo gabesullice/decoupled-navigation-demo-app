@@ -31,7 +31,7 @@ export INSTALL_DIR=js_menu_back_end
 
 # Creates a Drupal project and changes into its directory.
 composer create-project --no-install drupal/recommended-project "$INSTALL_DIR"
-cd 1"$INSTALL_DIR"
+cd "$INSTALL_DIR"
 
 # Enables automatic patch application.
 composer require cweagans/composer-patches:^1.5
