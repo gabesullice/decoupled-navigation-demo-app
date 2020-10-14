@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = {\n  drupal: {\n    server: {\n      url: \"http://api.decoupled-navigation.test\"\n    }\n  }\n};\n\n//# sourceURL=webpack:///./.env.js?");
+eval("module.exports = {\n  drupal: {}\n};\n\n//# sourceURL=webpack:///./.env.js?");
 
 /***/ }),
 
