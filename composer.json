@@ -1,0 +1,7 @@
+{
+  "name": "drupal/js_menu_demo",
+  "type": "drupal-theme",
+  "description": "Bare bones Drupal theme implementation which serves the single-page application demo.",
+  "homepage": "https://github.com/gabesullice/decoupled-navigation-demo-app",
+  "require": {}
+}

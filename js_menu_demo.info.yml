@@ -1,0 +1,11 @@
+name: JS Menu Component Bridge
+type: theme
+base theme: stable
+description: 'Serves the JS menu component single-page application demo'
+core_version_requirement: ^9
+
+# Regions
+regions:
+  content: 'Application Root'
+regions_hidden:
+  - content

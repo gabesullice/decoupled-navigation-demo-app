@@ -2,17 +2,18 @@ JS menu component proof-of-concept
 ===
 
 This React application demonstrates one approach to providing decoupled menus
-to a decoupled front end. It requires a Drupal site to be installed with a
-small number of patches and custom modules. Instructions for setting up the
-front and back ends are below.
+to a decoupled front end. It requires a Drupal site to be installed with a few
+patches and custom modules. You will find setup instructions below.
 
 The back end requires a couple sandbox modules (which require a couple core
 patches). The back end also needs to have some default configuration and
 content set up.
 
-[Skip to front end setup](#front-end-setup).
+In order to avoid CORS configuration and multiple vhosts, this project can be
+installed and used as a Drupal theme which simply loads the React SPA for all
+non-admin pages.
 
-## Back end setup
+## Setup
 
 ### 1. Download Drupal and the required modules/patches
 
@@ -36,54 +37,20 @@ cd 1"$INSTALL_DIR"
 composer require cweagans/composer-patches:^1.5
 composer config extra.enable-patching true
 
-# Makes the required sandbox modules available to composer.
+# Makes the required sandbox modules and this project available to composer.
 composer config repositories.1 vcs https://git.drupalcode.org/sandbox/gabesullice-3175825.git
 composer config repositories.2 vcs https://git.drupalcode.org/sandbox/gabesullice-3175828.git
+composer config repositories.3 vcs git@github.com:gabesullice/decoupled-navigation-demo-app.git
 
 # Installs the required modules.
 composer require --prefer-source drupal/jsonapi_navigation:1.0.x-dev
+composer require --prefer-source drupal/js_menu_demo:1.0.x-dev
 
 # Forces composer to apply the patches required by the sandbox modules.
 composer install
 ```
 
-### 2. Enable CORS
-
-Unless you will be serving the front-end application and the back-end
-application with the same hostname, you will need to set up the back end to
-allo "cross-origin resource sharing" (CORS). To do so, create a `services.yml`
-file:
-
-```sh
-cp sites/default/default.services.yml sites/default/services.yml
-```
-
-Then, make the following changes to `services.yml`:
-
-```diff
---- a/services.yml
-+++ b/services.yml
-@@ -159,7 +159,7 @@
-    # for more information about the topic in general.
-    # Note: By default the configuration is disabled.
-   cors.config:
--    enabled: false
-+    enabled: true
-     # Specify allowed headers, like 'x-allowed-header'.
-     allowedHeaders: []
-     # Specify allowed request methods, specify ['*'] to allow all possible ones.
-@@ -167,7 +167,7 @@
-     # Configure requests allowed from specific origins.
-     allowedOrigins: ['*']
-     # Sets the Access-Control-Expose-Headers header.
--    exposedHeaders: false
-+    exposedHeaders: true
-     # Sets the Access-Control-Max-Age header.
-     maxAge: false
-     # Sets the Access-Control-Allow-Credentials header.
-```
-
-### 3. Install Drupal
+### 2. Install Drupal
 
 Change directories into the web root (`cd web`) and run the following command.
 
@@ -93,14 +60,10 @@ php core/scripts/drupal install standard
 
 Take note of the generated username and password.
 
-Finally, you will need to set up an Apache vhost or other server. To avoid
-having to rebuild the project and apply extra configuration, use the hostname:
+Finally, you will need to set up an Apache vhost or other server. This is left
+as an exercise for the reader.
 
-```
-api.decoupled-navigation.test
-```
-
-### 4. Log in and create test content
+### 3. Log in and create test content
 
 Using the previously noted credentials, visit `/user/login` and log in as User
 1.
@@ -124,20 +87,18 @@ to `/node/1`.
 Visit `/admin/modules` and enable the _JSON:API Navigation_ module and its
 dependencies.
 
-## Front end setup
+### 6. Install the bridge theme
 
-To install the front end, you need to clone this repository.
+Visit `/admin/appearance`, find the _JS Menu Component Bridge_ theme and click
+_Install and set as default_. Do not use this theme as an administration theme
+and be sure to enable the _Use the administration theme when editing or
+creating content_ option.
 
-```sh
-git clone git@github.com:gabesullice/decoupled-navigation-demo-app.git
-cd decoupled-navigation-demo-app
-```
+## Developer setup
 
-If you used the hostname `api.decoupled-navigation.test` for the back end, then
-you're done!
-
-If you would like to make changes you will need to build the project. To do so,
-install the project's dependencies:
+If you would like to developer this project you will need to build the project.
+To do so, install the project's dependencies by changing directories into
+`themes/contrib/js_menu_demo` and running:
 
 ```sh
 npm install
@@ -149,24 +110,7 @@ Next, create a `.env.js` file:
 make .env.js
 ```
 
-You must configure the project so that it can reach your back end. To do so,
-open and edit the `.env.js` file. It should look like the example below. This
-should the the root URL for your back end (e.g.
-`https://js-menu-initiative.localhost:8888`).  It should _not_ have a trailing
-slash (`/`).
-
-```js
-// .env.js
-module.exports = {
-  drupal: {
-    server: {
-      url: "http://api.decoupled-navigation.test", // <- change this!
-    },
-  },
-};
-```
-
-Finally, build the project again by running:
+To build the project, run:
 
 ```sh
 make
@@ -174,14 +118,6 @@ make
 
 Running `make` will run both [prettier] and [webpack], but you can run them
 individually with either `make prettier` or `make pack`.
-
-### "Pretty" URLs
-
-This directory is meant to be served by a different Apache vhost than the back
-end. For example, the front end can be served from
-`www.decoupled-navigation.test` and the back end can be served from
-`api.decoupled-navigation.test`. If your server is set up this way, pretty URLs
-that are defined by the back end should work out of the box.
 
 [prettier]: https://prettier.io/
 [webpack]: https://webpack.js.org/

@@ -1,0 +1,8 @@
+app:
+  css:
+    theme:
+      dist/main.css: {}
+  js:
+    dist/app.js: {
+      preprocess: false
+    }
