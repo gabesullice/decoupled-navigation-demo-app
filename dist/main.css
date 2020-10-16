@@ -11,8 +11,34 @@ body {
   margin: 0 auto;
 }
 
+.react_icon {
+  position: fixed;
+  top: 0;
+  left: -20px;
+  height: 100px;
+  animation: rotation 20s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .main_content {
   margin: 0 20px;
+}
+
+.main_content_container {
+  transition: opacity .25s ease-in-out;
+  opacity: 1;
+}
+
+.main_content_container.is_changing {
+  opacity: 0;
 }
 
 .main_content__dates {

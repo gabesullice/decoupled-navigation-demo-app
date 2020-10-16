@@ -89,8 +89,7 @@ function parseMenu(menu, doc, followFn) {
 export default (menu) => {
   const { response, json, loading, follow } = useContext(DrupalContext);
   return {
-    tree:
-      !loading && response.ok && json ? parseMenu(menu, json, follow) : null,
+    tree: json && response.ok ? parseMenu(menu, json, follow) : null,
     loading,
   };
 };

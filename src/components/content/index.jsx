@@ -15,18 +15,28 @@ const DocumentViewer = ({ doc }) => {
 export default () => {
   const { loading, json } = useContext(DrupalContext);
 
-  if (loading || !json) {
+  if (!json) {
     return null;
   }
 
+  let content;
   switch (json.data.type) {
     case "node--article":
-      return <Article data={json.data} />;
+      content = <Article data={json.data} />;
+      break;
 
     case "node--page":
-      return <Page data={json.data} />;
+      content = <Page data={json.data} />;
+      break;
 
     default:
-      return <DocumentViewer doc={json} />;
+      content = <DocumentViewer doc={json} />;
   }
+
+  return (
+    <div className={`main_content_container ${loading ? "is_changing" : ""}`}>
+      {" "}
+      {content}{" "}
+    </div>
+  );
 };

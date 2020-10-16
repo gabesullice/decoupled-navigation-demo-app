@@ -31,9 +31,9 @@ const LinkItems = ({ links }) => {
 };
 
 export default () => {
-  const { tree, loading } = useMenu("main");
+  const { tree } = useMenu("main");
 
-  if (loading || !tree) {
+  if (!tree) {
     return null;
   }
 
