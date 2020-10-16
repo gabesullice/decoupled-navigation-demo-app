@@ -46,7 +46,6 @@ function parseMenu(menu, doc, followFn) {
   do {
     if (!level.length) {
       level.push(menuLinks.shift());
-      continue;
     } else {
       const currLength = menuLinks[0].hierarchy.length;
       if (lastLength(level) === currLength) {
@@ -58,7 +57,14 @@ function parseMenu(menu, doc, followFn) {
         do {
           const children = [...level];
           level = stack.pop();
-          level[level.length - 1].children = children;
+          const parent = level[level.length - 1];
+          children.forEach((child) => {
+            if (child.hierarchy.startsWith(parent.hierarchy)) {
+              parent.children
+                ? parent.children.push(child)
+                : (parent.children = [child]);
+            }
+          });
         } while (lastLength(level) > currLength);
         level.push(menuLinks.shift());
       }
