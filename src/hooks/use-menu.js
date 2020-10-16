@@ -11,7 +11,7 @@ function normalizeLinks(linksObject) {
     return {
       href: new URL(href),
       rel: rel || key.split("--")[0],
-      meta,
+      meta: { type: "application/vnd.api+json", ...meta },
     };
   });
 }
@@ -28,7 +28,9 @@ function parseMenu(menu, doc, followFn) {
         title: meta.title,
         description: meta.description,
         hierarchy: meta.hierarchy,
-        follow: () => followFn(link),
+        follow: !meta.type.startsWith("text/html")
+          ? () => followFn(link)
+          : null,
       };
     });
 

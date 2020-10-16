@@ -6,20 +6,22 @@ import { newURLWithOrigin } from "../../utils/url";
 const LinkItem = ({ link }) => {
   const target = newURLWithOrigin(link.href, window.location);
   target.searchParams.delete("_format");
+
+  const anchorAttributes = {
+    href: target.toString(),
+    title: link.description,
+  };
+
+  if (link.follow) {
+    anchorAttributes.onClick = (e) => {
+      e.preventDefault();
+      link.follow();
+    };
+  }
+
   return (
     <li>
-      <a
-        {...{
-          href: target.toString(),
-          title: link.description,
-          onClick: (e) => {
-            e.preventDefault();
-            link.follow();
-          },
-        }}
-      >
-        {link.title}
-      </a>
+      <a {...anchorAttributes}>{link.title}</a>
       <LinkItems links={link.children || []} />
     </li>
   );
