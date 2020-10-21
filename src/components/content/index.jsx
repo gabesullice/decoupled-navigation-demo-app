@@ -1,42 +1,33 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { DrupalContext } from "../../contexts/drupal";
 import Page from "./page";
+import {
+  ResponseSwitch as ViewSelector,
+  ResponseCase as ViewIf,
+} from "response-switch";
+import { useJSON, useResponse } from "@drupal/navigator";
 import Article from "./article";
 
-const DocumentViewer = ({ doc }) => {
-  return (
-    <pre className="main_content main_content--raw">
-      {JSON.stringify(doc, null, "  ")}
-    </pre>
-  );
+const ArticleView = function () {
+  const json = useJSON();
+  return json && <Article data={json.data} />;
 };
 
-export default () => {
-  const { loading, json } = useContext(DrupalContext);
-
-  if (!json) {
-    return null;
-  }
-
-  let content;
-  switch (json.data.type) {
-    case "node--article":
-      content = <Article data={json.data} />;
-      break;
-
-    case "node--page":
-      content = <Page data={json.data} />;
-      break;
-
-    default:
-      content = <DocumentViewer doc={json} />;
-  }
-
-  return (
-    <div className={`main_content_container ${loading ? "is_changing" : ""}`}>
-      {" "}
-      {content}{" "}
-    </div>
-  );
+const PageView = function () {
+  const json = useJSON();
+  return json && <Page data={json.data} />;
 };
+
+export default function Content() {
+  const responseContext = useResponse();
+  return (
+    <ViewSelector responseContext={responseContext}>
+      <ViewIf json={{ pointer: "/data/type", value: "node--article" }}>
+        <ArticleView />
+      </ViewIf>
+      <ViewIf json={{ pointer: "/data/type", value: "node--page" }}>
+        <PageView />
+      </ViewIf>
+    </ViewSelector>
+  );
+}

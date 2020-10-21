@@ -1,47 +1,47 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import useMenu from "../../hooks/use-menu";
-import { newURLWithOrigin } from "../../utils/url";
+import { frontendURL } from "../../utils/url";
+import { Link } from "@reach/router";
+
+function LinkElement({ menuLink }) {
+  // Use the router to follow the link if the link is a JSON:API link;
+  // otherwise, use a standard anchor link to force a true window navigation.
+  const target = frontendURL(menuLink.href);
+  const { title, description } = menuLink;
+  return menuLink.type === "application/vnd.api+json" ? (
+    <Link
+      to={`${target.pathname}${target.search}${target.hash}`}
+      title={description}
+    >
+      {title}
+    </Link>
+  ) : (
+    <a href={target.toString()} title={menuLink.description}>
+      {title}
+    </a>
+  );
+}
 
 const LinkItem = ({ link }) => {
-  const target = newURLWithOrigin(link.href, window.location);
-  target.searchParams.delete("_format");
-
-  const anchorAttributes = {
-    href: target.toString(),
-    title: link.description,
-  };
-
-  if (link.follow) {
-    anchorAttributes.onClick = (e) => {
-      e.preventDefault();
-      link.follow();
-    };
-  }
-
   return (
-    <li>
-      <a {...anchorAttributes}>{link.title}</a>
-      <LinkItems links={link.children || []} />
+    <li className="menu_item">
+      <LinkElement menuLink={link} />
+      {!!link.children && <LinkItems links={link.children} childList />}{" "}
     </li>
   );
 };
 
-const LinkItems = ({ links }) => {
+const LinkItems = ({ links, childList = false }) => {
   const items = links.map((link, key) => <LinkItem {...{ key, link }} />);
-  return items.length ? <ul>{items}</ul> : null;
+  return items.length ? (
+    <ul className={!childList ? "menu" : ""}>{items}</ul>
+  ) : null;
 };
 
-export default () => {
-  const { tree } = useMenu("main");
-
-  if (!tree) {
-    return null;
-  }
-
+export default function Nav({ tree }) {
   return (
     <nav>
       <LinkItems links={tree} />
     </nav>
   );
-};
+}

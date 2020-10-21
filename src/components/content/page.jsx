@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ data: { type, id, attributes = {} } }) => {
+export default ({ data: { attributes = {} } }) => {
   const { title, body = null } = attributes;
   return (
     <article className="main_content main_content--page">

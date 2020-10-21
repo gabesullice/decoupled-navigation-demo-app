@@ -11,25 +11,25 @@ body {
   margin: 0 auto;
 }
 
-.react_icon {
-  position: fixed;
-  top: 0;
-  left: -20px;
-  height: 100px;
-  animation: rotation 20s infinite linear;
+.menu, .menu ul {
+  list-style: none;
+  padding: 0;
 }
 
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.menu {
+  margin: 1rem;
+}
+
+.menu ul {
+  padding-left: 1rem;
+}
+
+.menu_item {
+  padding: 0;
 }
 
 .main_content {
-  margin: 0 20px;
+  margin: 0 1rem;
 }
 
 .main_content_container {
@@ -62,4 +62,28 @@ body {
 
 .main_content__body p:first-child {
   margin-top: 0;
+}
+
+.react_icon {
+  display: block;
+  margin: 0 auto;
+  height: 5rem;
+  animation: rotation 20s infinite linear;
+}
+
+@media (min-width: 800px) {
+  .react_icon {
+    position: fixed;
+    top: 0;
+    left: -1rem;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

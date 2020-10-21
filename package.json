@@ -19,7 +19,11 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@drupal/navigator": "file:./lib/drupal-navigator",
+    "@reach/router": "^1.3.4",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "response-switch": "file:./lib/response-switch",
+    "use-timer": "^2.0.1"
   }
 }

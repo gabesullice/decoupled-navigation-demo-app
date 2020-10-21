@@ -3,13 +3,7 @@ import React from "react";
 import Time from "../elements/time";
 
 const Article = ({ data: { type, id, attributes = {} } }) => {
-  const {
-    title,
-    created,
-    changed,
-    body = null,
-    field_image = null,
-  } = attributes;
+  const { title, created, changed, body = null } = attributes;
   return (
     <article className="main_content main_content--article">
       <title>{title}</title>

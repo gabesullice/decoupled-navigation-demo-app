@@ -1,16 +1,17 @@
 import React from "react";
 
-import Nav from "./nav";
-import Content from "./content";
-import { DrupalProvider } from "../contexts/drupal";
-import ReactIcon from "./elements/react-icon";
+import { Router } from "@reach/router";
+import { PageWrapper } from "./layout";
+import Dashboard from "./pages/dashboard";
+import DrupalPage from "./pages/drupal-page";
 
-export default ({ config }) => (
-  <DrupalProvider config={config.drupal}>
-    <div className="page_wrapper">
-      <ReactIcon />
-      <Nav />
-      <Content />
-    </div>
-  </DrupalProvider>
-);
+export default function Main() {
+  return (
+    <PageWrapper>
+      <Router>
+        <Dashboard path="dashboard" />
+        <DrupalPage default />
+      </Router>
+    </PageWrapper>
+  );
+}
