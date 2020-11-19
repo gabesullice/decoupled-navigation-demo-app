@@ -21,7 +21,9 @@
   "dependencies": {
     "@drupal/navigator": "file:./lib/drupal-navigator",
     "@reach/router": "^1.3.4",
+    "bootstrap": "^4.5.3",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.4.0",
     "react-dom": "^16.13.1",
     "response-switch": "file:./lib/response-switch",
     "use-timer": "^2.0.1"
