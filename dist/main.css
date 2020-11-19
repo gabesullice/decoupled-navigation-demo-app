@@ -11,23 +11,6 @@ body {
   margin: 0 auto;
 }
 
-.menu, .menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.menu {
-  margin: 1rem;
-}
-
-.menu ul {
-  padding-left: 1rem;
-}
-
-.menu_item {
-  padding: 0;
-}
-
 .main_content {
   margin: 0 1rem;
 }
@@ -67,16 +50,8 @@ body {
 .react_icon {
   display: block;
   margin: 0 auto;
-  height: 5rem;
-  animation: rotation 20s infinite linear;
-}
-
-@media (min-width: 800px) {
-  .react_icon {
-    position: fixed;
-    top: 0;
-    left: -1rem;
-  }
+  height: 30px;
+  animation: rotation 5s infinite linear;
 }
 
 @keyframes rotation {
