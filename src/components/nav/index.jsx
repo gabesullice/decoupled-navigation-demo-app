@@ -4,6 +4,9 @@ import { frontendURL } from "../../utils/url";
 import { Link } from "@reach/router";
 
 function LinkElement({ menuLink }) {
+  if (menuLink.href === null) {
+    return <span>{menuLink.title}</span>;
+  }
   // Use the router to follow the link if the link is a JSON:API link;
   // otherwise, use a standard anchor link to force a true window navigation.
   const target = frontendURL(menuLink.href);
