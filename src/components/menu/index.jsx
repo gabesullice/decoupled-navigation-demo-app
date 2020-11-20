@@ -69,10 +69,11 @@ export default function Menu({ tree }) {
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>
         <ReactIcon />
+        <Navbar.Text>DrupalCon Europe</Navbar.Text>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse>
-        <Nav className="mr-auto">
+        <Nav className="ml-auto">
           <LinkItems items={tree} />
         </Nav>
       </Navbar.Collapse>
