@@ -61,3 +61,28 @@ body {
     transform: rotate(360deg);
   }
 }
+
+a.dropdown-toggle:after {
+  content: none !important;
+}
+
+.navbar-collapse {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+    border: none;
+    background-color: #f8f9fa !important;
+  }
+
+  .dropdown-item {
+    padding: .5rem 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,.3);
+  }
+
+  .dropdown-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
