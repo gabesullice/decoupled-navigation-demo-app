@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 import { Link as RouterLink } from "@reach/router";
@@ -30,10 +30,16 @@ function Item({ item, inDropdown = false }) {
 }
 
 function Dropdown({ title, items }) {
+  // Use isOpen to show menu on hover.
+  const [isOpen, setOpen] = useState(false);
   // React Bootstrap does not support parent items that are links, only text.
   // Therefore, the parent item it only used for its title.
   return (
-    <NavDropdown title={title}>
+    <NavDropdown title={title}
+                 onMouseEnter = {() => setOpen(true)}
+                 onMouseLeave = {() => setOpen(false)}
+                 show={ isOpen }
+    >
       {items.map((item, key) => {
         // If the item is not a link, render it as text.
         if (item.href === null) {
